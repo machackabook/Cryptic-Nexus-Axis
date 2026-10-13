@@ -17,7 +17,7 @@ Cloudflare returned an active `crypticnews.org` zone on a Free Website plan duri
 A `schedule` trigger is a periodic event, not a persistent process, and GitHub or Cloudflare impose quotas, limits and cancellation policies. No agent may continuously self-dispatch solely to evade ChatGPT or provider task limits. Instead, use an idempotency key, queue, retry/backoff, checkpoint, finite budget, stop mechanism and completed/failed states.
 
 ## Cadence
-- Daily: inspect queue health (read only); currently authored in `.github/workflows/queue-health.yml`.
+- Daily at 08:17 UTC: inspect queue health (read only); currently authored in `.github/workflows/queue-health.yml`.
 - On every pull request: source size / asset bound checks via `axis-dashboard-quality.yml`.
 - Monday and Friday: planned proposals and evidence reviews; configuration alone does not schedule them.
 - Production deploy: separate manual approval and protected environment, after explicit target selection.
