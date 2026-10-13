@@ -4,21 +4,23 @@
   "jobs": [
     {
       "id": "queue-health",
-      "cadence": "daily 08:00 UTC",
+      "cadence": "daily 08:17 UTC",
       "mode": "report",
       "autoDeploy": false
     },
     {
       "id": "integration-review",
-      "cadence": "Monday 09:00 UTC",
+      "cadence": "Monday 09:13 UTC",
       "mode": "proposal",
-      "autoDeploy": false
+      "autoDeploy": false,
+      "status": "planned"
     },
     {
       "id": "readiness-review",
-      "cadence": "Friday 15:00 UTC",
+      "cadence": "Friday 15:23 UTC",
       "mode": "evidence-review",
-      "autoDeploy": false
+      "autoDeploy": false,
+      "status": "planned"
     }
   ]
 }
