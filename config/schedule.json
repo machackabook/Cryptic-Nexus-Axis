@@ -1,0 +1,26 @@
+{
+  "schema": "nexus.axis.schedule/v1",
+  "timezone": "UTC",
+  "jobs": [
+    {
+      "id": "queue-health",
+      "cadence": "daily 08:17 UTC",
+      "mode": "report",
+      "autoDeploy": false
+    },
+    {
+      "id": "integration-review",
+      "cadence": "Monday 09:13 UTC",
+      "mode": "proposal",
+      "autoDeploy": false,
+      "status": "planned"
+    },
+    {
+      "id": "readiness-review",
+      "cadence": "Friday 15:23 UTC",
+      "mode": "evidence-review",
+      "autoDeploy": false,
+      "status": "planned"
+    }
+  ]
+}

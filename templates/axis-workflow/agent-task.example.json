@@ -1,0 +1,23 @@
+{
+  "schema": "nexus.axis.agent-task/v1",
+  "id": "site-quality-001",
+  "purpose": "Review graphics-heavy site build size and propose fixes",
+  "repository": "machackabook/Cryptic-Nexus-Axis",
+  "branch_policy": "proposals_only",
+  "max_attempts": 3,
+  "timeout_seconds": 900,
+  "max_parallel": 2,
+  "requires_human_approval": true,
+  "permissions": [
+    "contents:read",
+    "issues:read"
+  ],
+  "dedupe_key": "site-quality-001:main",
+  "cancel_on_stop": true,
+  "allowed_outputs": [
+    "issue",
+    "draft_pull_request",
+    "redacted_summary"
+  ],
+  "production_deploy": false
+}

@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.mobileprovision
+**/credentials/**
+**/secrets/**
+audit/private/**
+device-receipts/**
+node_modules/
+dist/
