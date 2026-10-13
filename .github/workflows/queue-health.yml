@@ -1,7 +1,7 @@
 name: AXIS Queue Health
 on:
   schedule:
-    - cron: '0 8 * * *'
+    - cron: '17 8 * * *'
   workflow_dispatch:
 permissions:
   contents: read
@@ -20,6 +20,8 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          echo "AXIS queue health (read only)"
-          gh issue list --repo "$GH_REPO" --state open --limit 100 --json number,title,labels             --jq '.[] | "#\(.number) \(.title)"' | head -n 100
+          echo "AXIS queue health (read-only, 08:17 UTC)"
+          gh issue list --repo "$GH_REPO" --state open --limit 100 \
+            --json number,title,labels \
+            --jq '.[] | "#\(.number) \(.title)"'
           echo "No mutation, agent execution or deployment performed."
