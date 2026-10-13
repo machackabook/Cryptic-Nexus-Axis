@@ -1,0 +1,17 @@
+name: AXIS Dashboard Quality
+on:
+  pull_request:
+    paths:
+      - 'dashboard/**'
+      - '.github/workflows/axis-*quality.yml'
+      - 'skills/nexus-axis-automation/**'
+      - 'templates/axis-workflow/**'
+      - 'docs/CRYPTICNEWS_AUTOMATION.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  site-audit:
+    uses: ./.github/workflows/axis-reusable-site-quality.yml
+    with:
+      site_root: dashboard
