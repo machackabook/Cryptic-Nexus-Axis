@@ -1,0 +1,68 @@
+{
+  "schema": "nexus.axis.integrations/v1",
+  "integrations": [
+    {
+      "id": "termux",
+      "name": "Termux",
+      "state": "planned",
+      "tier": "device",
+      "owner": "runtime"
+    },
+    {
+      "id": "acode",
+      "name": "Acode plugin bridge",
+      "state": "planned",
+      "tier": "ui",
+      "owner": "editor"
+    },
+    {
+      "id": "rust",
+      "name": "Rust supervisor",
+      "state": "planned",
+      "tier": "engine",
+      "owner": "runtime"
+    },
+    {
+      "id": "pwsh",
+      "name": "PowerShell engine",
+      "state": "planned",
+      "tier": "engine",
+      "owner": "runtime"
+    },
+    {
+      "id": "fish",
+      "name": "Fish shell",
+      "state": "planned",
+      "tier": "engine",
+      "owner": "runtime"
+    },
+    {
+      "id": "x11",
+      "name": "Termux:X11",
+      "state": "planned",
+      "tier": "ui",
+      "owner": "desktop"
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama local",
+      "state": "planned",
+      "tier": "model",
+      "owner": "agents"
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini CLI/API",
+      "state": "planned",
+      "tier": "model",
+      "owner": "agents"
+    },
+    {
+      "id": "nas",
+      "name": "Sparse storage API",
+      "state": "planned",
+      "tier": "storage",
+      "owner": "runtime"
+    }
+  ]
+}
