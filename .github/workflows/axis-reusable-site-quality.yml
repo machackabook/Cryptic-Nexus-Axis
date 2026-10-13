@@ -1,0 +1,71 @@
+name: AXIS Reusable Static Asset Quality
+on:
+  workflow_call:
+    inputs:
+      site_root:
+        type: string
+        required: false
+        default: dashboard
+  workflow_dispatch:
+    inputs:
+      site_root:
+        type: string
+        required: false
+        default: dashboard
+permissions:
+  contents: read
+concurrency:
+  group: axis-static-audit-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  audit:
+    name: Verify client asset bounds
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SITE_ROOT: ${{ inputs.site_root || 'dashboard' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Audit bounded static build surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          root_arg = Path(os.environ["SITE_ROOT"])
+          if root_arg.is_absolute() or ".." in root_arg.parts:
+              raise SystemExit("BLOCKED: site_root must be inside checkout")
+          root = (Path.cwd() / root_arg).resolve()
+          root.relative_to(Path.cwd().resolve())
+          if not root.is_dir():
+              raise SystemExit("BLOCKED: site directory missing")
+          limits = {".html": 512 * 1024, ".css": 2 * 1024 * 1024, ".js": 2 * 1024 * 1024, ".mjs": 2 * 1024 * 1024,
+                    ".png": 12 * 1024 * 1024, ".jpg": 12 * 1024 * 1024, ".jpeg": 12 * 1024 * 1024, ".webp": 12 * 1024 * 1024}
+          errors = []
+          stats = {"files": 0, "bytes": 0}
+          for p in root.rglob("*"):
+              if p.is_symlink():
+                  errors.append(f"symlink not allowed: {p.relative_to(root)}")
+                  continue
+              if not p.is_file():
+                  continue
+              stats["files"] += 1
+              size = p.stat().st_size
+              stats["bytes"] += size
+              limit = limits.get(p.suffix.lower())
+              if limit is not None and size > limit:
+                  errors.append(f"asset size over cap: {p.relative_to(root)}")
+          if stats["files"] > 10000:
+              errors.append("file count over cap")
+          if stats["bytes"] > 500 * 1024 * 1024:
+              errors.append("total assets exceed 500 MiB")
+          print(f"site_files={stats['files']} site_bytes={stats['bytes']} violations={len(errors)}")
+          for item in errors[:30]:
+              print("REVIEW:", item)
+          if errors:
+              raise SystemExit(1)
+          print("SOURCE_ASSET_BOUNDS_PASS; browser performance and deployment not verified")
+          PY
